@@ -1,5 +1,5 @@
 const multiplyValue = (value: number, multiplier?: number): number => {
-  if (Number(multiplier) && multiplier !== undefined) {
+  if (multiplier !== undefined) {
     return value * multiplier;
   } else {
     return value * 2;
@@ -7,9 +7,6 @@ const multiplyValue = (value: number, multiplier?: number): number => {
 };
 
 const processInput = (value: string | number | boolean): string | number | boolean | undefined => {
-  if (typeof value === "undefined" || typeof value === null) {
-    return;
-  }
   if (typeof value === "string") {
     return value.trim().toLowerCase();
   } else if (typeof value === "number") {
@@ -23,7 +20,7 @@ const processInput = (value: string | number | boolean): string | number | boole
   }
 };
 
-const formatCoordinate = (value: [number, number, string]): string => {
+const formatCoordinate = (value: readonly [number, number, string]): string => {
   if (typeof value[0] === "number" && typeof value[1] === "number" && typeof value[2] === "string") {
     return `Location: ${value[2]} (${value[0]}, ${value[1]})`;
   } else {
@@ -31,7 +28,7 @@ const formatCoordinate = (value: [number, number, string]): string => {
   }
 };
 
-const concatenateArrays = <T extends string | number>(...arrays: T[][]): T[] => {
+const concatenateArrays = <T>(...arrays: T[][]): T[] => {
   const res: T[] = [];
   for (const array of arrays) {
     for (const item of array) {
@@ -48,7 +45,7 @@ interface Course {
   isPublished: boolean;
 }
 
-const getPopularCourses = (data: Course[], minStudents: number) => {
+const getPopularCourses = (data: Course[], minStudents: number): Course[] => {
   let res: Course[] = [];
   for (const item of data) {
     if (item.isPublished && item.students >= minStudents) {
@@ -58,11 +55,12 @@ const getPopularCourses = (data: Course[], minStudents: number) => {
   return res;
 };
 
-const pluckValues = <T, K extends keyof T>(items: T[], key: K) => {
-  if (items && items.length > 0) {
-    return items.map((item) => item?.[key]);
+const pluckValues = <T, K extends keyof T>(items: T[], key: K): T[K][] => {
+  let result: T[K][] = [];
+  for (const item of items) {
+    result.push(item[key]);
   }
-  return [];
+  return result;
 };
 
 class Employee {
@@ -70,7 +68,7 @@ class Employee {
     protected name: string,
     private baseSalary: number,
   ) {}
-  getDetails() {
+  getDetails(): string {
     return `Employee: ${this.name}, Base Salary: ${this.baseSalary}`;
   }
 }
@@ -84,7 +82,18 @@ class Manager extends Employee {
     super(name, baseSalary);
   }
 
-  getRoleInfo() {
+  getRoleInfo(): string {
     return `Manager of ${this.department}: ${this.name}`;
   }
 }
+const validateAgeAsync = async (age: number): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    if (age >= 18) {
+      setTimeout(() => {
+        resolve("Access Granted");
+      }, 1000);
+    } else {
+      reject(new Error("Access Denied: Must be 18 or older"));
+    }
+  });
+};
