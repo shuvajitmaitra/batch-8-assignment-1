@@ -57,3 +57,34 @@ const getPopularCourses = (data: Course[], minStudents: number) => {
   }
   return res;
 };
+
+const pluckValues = <T, K extends keyof T>(items: T[], key: K) => {
+  if (items && items.length > 0) {
+    return items.map((item) => item?.[key]);
+  }
+  return [];
+};
+
+class Employee {
+  constructor(
+    protected name: string,
+    private baseSalary: number,
+  ) {}
+  getDetails() {
+    return `Employee: ${this.name}, Base Salary: ${this.baseSalary}`;
+  }
+}
+
+class Manager extends Employee {
+  constructor(
+    name: string,
+    baseSalary: number,
+    private department: string,
+  ) {
+    super(name, baseSalary);
+  }
+
+  getRoleInfo() {
+    return `Manager of ${this.department}: ${this.name}`;
+  }
+}
