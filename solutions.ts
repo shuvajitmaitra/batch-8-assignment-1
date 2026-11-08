@@ -31,9 +31,29 @@ const formatCoordinate = (value: [number, number, string]): string => {
   }
 };
 
-console.log(formatCoordinate([23.81, 90.41, "Dhaka"]));
-console.log(formatCoordinate([22.35, 91.78, "Chittagong"]));
+const concatenateArrays = <T extends string | number>(...arrays: T[][]): T[] => {
+  const res: T[] = [];
+  for (const array of arrays) {
+    for (const item of array) {
+      res.push(item);
+    }
+  }
 
-// Sample Output:
-("Location: Dhaka (23.81, 90.41)");
-("Location: Chittagong (22.35, 91.78)");
+  return res;
+};
+
+interface Course {
+  title: string;
+  students: number;
+  isPublished: boolean;
+}
+
+const getPopularCourses = (data: Course[], minStudents: number) => {
+  let res: Course[] = [];
+  for (const item of data) {
+    if (item.isPublished && item.students >= minStudents) {
+      res.push(item);
+    }
+  }
+  return res;
+};
