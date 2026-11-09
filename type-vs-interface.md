@@ -1,4 +1,4 @@
-# Type Alias vs Interface in TypeScript
+# What are the core differences between type aliases and interface in TypeScript? When should you choose one over the other?
 
 In many interviews and at the workplace, we are asked about the main differences between Type Aliases and Interfaces. In most cases, they act the same, but in some cases, they are different. In this article, we are going to learn the key differences between Type Aliases and Interfaces with proper examples.
 
